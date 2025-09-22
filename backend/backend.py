@@ -38,7 +38,10 @@ async def send_fax(
         # Configure Fax.Plus client
         configuration = Configuration()
         configuration.host = "https://restapi.fax.plus/v3"
-        configuration.access_token = "alohi_pat_NDGRR6lWT1xtNv8XvJirEf_oABCVaO9ezACqo6yyLgAOLMVnefll5q2PzHMebjtsLG6nHxgY7mDxZTy3SG" 
+        configuration.access_token = os.getenv(FAXPLUS_ACCESS_TOKEN)
+        if not access_token:
+            return {"error": "Missing FAXPLUS_ACCESS_TOKEN in environment"}
+
 
         api_client = ApiClient(configuration)
         files_api = FilesApi(api_client)

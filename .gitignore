@@ -1,3 +1,17 @@
-backend/__pycache
-backend/venv
-frontend/node_modules
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+*.db
+.venv/
+venv/
+
+# FastAPI env
+.env
+
+# Node frontend
+node_modules/
+build/
+dist/
