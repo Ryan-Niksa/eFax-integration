@@ -1,3 +1,4 @@
+import os
 import tempfile
 import logging
 from fastapi import FastAPI, UploadFile, Form
@@ -10,6 +11,9 @@ from faxplus.rest import ApiException
 from faxplus.models.outbox_comment import OutboxComment
 from faxplus.models.payload_outbox import PayloadOutbox
 from datetime import datetime
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -29,7 +33,7 @@ app.add_middleware(
 @app.post("/send-fax/")
 async def send_fax(
     to_number: str = Form(...),
-    from_number: str = Form(...),   # ✅ must come from frontend
+    from_number: str = Form(...),
     cover_letter: str = Form(""),
     file: UploadFile = None
 ):
@@ -38,8 +42,8 @@ async def send_fax(
         # Configure Fax.Plus client
         configuration = Configuration()
         configuration.host = "https://restapi.fax.plus/v3"
-        configuration.access_token = os.getenv(FAXPLUS_ACCESS_TOKEN)
-        if not access_token:
+        configuration.access_token = os.getenv("FAXPLUS_ACCESS_TOKEN")
+        if not configuration.access_token:
             return {"error": "Missing FAXPLUS_ACCESS_TOKEN in environment"}
 
 
